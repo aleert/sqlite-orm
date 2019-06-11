@@ -162,3 +162,12 @@ To close connection to database run
 .. code-block:: python
 
     db.close()
+
+Running tests
+-------------
+
+There are few tests that demonstrate basic behaviour. To run them just
+
+.. code-block:: shell
+
+    python -m unittest
