@@ -1,6 +1,6 @@
 Simple sqlite orm. To install it clone this repo and run
 
-.. code-block::
+.. code-block:: shell
 
     python setup.py install
 
@@ -14,7 +14,7 @@ Creating database
 
 First you should create database:
 
-.. code-block::
+.. code-block:: python
 
     from sqlite_orm.db import Database
     db = Database()
@@ -30,7 +30,7 @@ Creating models
 
 After you have database you can create some models.
 
-.. code-block::
+.. code-block:: python
 
     from sqlite_orm.fields import IntField, TextField, ForeignKeyField
 
@@ -51,7 +51,7 @@ parameter to field constructor.
 
 Now you can actually add models to database. Just issue
 
-.. code-block::
+.. code-block:: python
 
     db.create_all()
 
@@ -62,7 +62,7 @@ Adding model instances
 **********************
 Create some model instances and ``add`` them to database.
 
-.. code-block::
+.. code-block:: python
 
         m11 = New(field1='Aaaa', field2=15, field3=3)
         m12 = New(field1='Aaaa', field2=30, field3=1)
@@ -75,7 +75,7 @@ or using special model attribute ``model.pk``.
 
 To update a record in database just change the model and add it to database again:
 
-.. code-block::
+.. code-block:: python
 
         m11.field1 = 'Some new text'
         db.add(m11)
@@ -88,7 +88,7 @@ Methods that evaluate query
 Database has special method ``query`` that accepts model instance as its argument.
 So to query model by its pk run
 
-.. code-block::
+.. code-block:: python
 
         m11_db = db.query(New).get(3)
 
@@ -96,7 +96,7 @@ and that will return ``New`` instance.
 
 To get all results use ``query.all()`` and to get first record use ``query.first()``:
 
-.. code-block::
+.. code-block:: python
 
     m1_list = db.query(New).all()
     m1_model = db.query(New).first()
@@ -108,13 +108,13 @@ To filter result with WHERE sql condition use ``query.filter`` statement that
 accepts keyword arguments corresponding to model fields. Currently only '='
 comparisons available:
 
-.. code-block::
+.. code-block:: python
 
         m11_m12_db = db.query(New).filter(field1='Aaaa').all()
 
 Filter statements can be chained together:
 
-.. code-block::
+.. code-block:: python
 
         m11_db = db.query(New).filter(field1='Aaaa').filter(field2=15).first()
 
@@ -123,7 +123,7 @@ There is also ``db.select`` method that allows you to select just specified fiel
 fields to query. Returned dict is namespaced with ``.`` symbol so keys will be like
 '``{tablename}.{field_name}``'.
 
-.. code-block::
+.. code-block:: python
 
         m11_db_dict = db.query(New).filter(field1='Aaaa').select(New, fields=['field2', 'field1']).first()
         >>> m11_db_dict
@@ -134,7 +134,7 @@ Joins
 
 If models related by foreign_key join will be made automatically by that field:
 
-.. code-block::
+.. code-block:: python
 
         m21_db_dict = db.query(New).join(New2).select(New2, fields=['field5']).filter(field2=15).first()
         >>>m21_db_dict
@@ -143,7 +143,7 @@ If models related by foreign_key join will be made automatically by that field:
 
 Otherwise you can join any tables
 
-.. code-block::
+.. code-block:: python
 
         m13 = New(field1='Dddd', field2=30)
         m22 = New2(field4=m11, field5='Dddd')
@@ -159,6 +159,6 @@ Closing database
 ----------------
 To close connection to database run
 
-.. code-block::
+.. code-block:: python
 
     db.close()
